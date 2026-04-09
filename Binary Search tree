@@ -1,0 +1,95 @@
+class TreeNode {
+    int data;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int data) {
+        this.data = data;
+        left = right = null;
+    }
+}
+
+class BST {
+    TreeNode root;
+    public BST(int data) {
+        root = new TreeNode(data);
+    }
+    public void insert(int data) {
+        root = insertNode(root, data);
+    }
+
+    public TreeNode insertNode(TreeNode root, int data) {
+        if (root == null) {
+            return new TreeNode(data);
+        }
+
+        if (data < root.data) {
+            root.left = insertNode(root.left, data);
+        } else {
+            root.right = insertNode(root.right, data);
+        }
+
+        return root;
+    }
+    public void inOrder(TreeNode root) {
+        if (root == null) return;
+
+        inOrder(root.left);
+        System.out.print(root.data + " ");
+        inOrder(root.right);
+    }
+    public void searchNode(TreeNode root, int data) {
+        if (root == null) {
+            System.out.println("Element not found");
+            return;
+        }
+
+        if (data == root.data) {
+            System.out.println("Element found");
+        } else if (data < root.data) {
+            searchNode(root.left, data);
+        } else {
+            searchNode(root.right, data);
+        }
+    }
+    public int findMinimum(TreeNode root) {
+        if (root == null) {
+            System.out.println("No tree exists");
+            return -1;
+        }
+
+        if (root.left == null)
+            return root.data;
+
+        return findMinimum(root.left);
+    }
+    public int findMaximum(TreeNode root) {
+        if (root == null) {
+            System.out.println("No tree exists");
+            return -1;
+        }
+
+        if (root.right == null)
+            return root.data;
+
+        return findMaximum(root.right);
+    }
+}
+
+public class Main{
+    public static void main(String[] args) {
+        BST bst = new BST(50);
+
+        bst.insert(30);
+        bst.insert(10);
+        bst.insert(60);
+        bst.insert(55);
+
+        bst.inOrder(bst.root);
+        System.out.println();
+
+        bst.searchNode(bst.root, 55);
+
+        System.out.println("Minimum: " + bst.findMinimum(bst.root));
+        System.out.println("Maximum: " + bst.findMaximum(bst.root));
+    }
+}
