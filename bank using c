@@ -1,0 +1,81 @@
+#include <stdio.h>
+#include <string.h>
+struct Account {
+    int accNo;
+    char name[50];
+    float balance;
+};
+int main() {
+    struct Account acc;
+    int choice, created = 0;
+    float amount;
+
+    while (1) {
+        printf("\n--- Bank Management System ---\n");
+        printf("1. Create Account\n");
+        printf("2. Deposit Money\n");
+        printf("3. Withdraw Money\n");
+        printf("4. Check Balance\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+
+        case 1:
+            printf("Enter Account Number: ");
+            scanf("%d", &acc.accNo);
+            printf("Enter Name: ");
+            scanf("%s", acc.name);
+            acc.balance = 0;
+            created = 1;
+            printf("Account Created Successfully!\n");
+            break;
+
+        case 2:
+            if (!created) {
+                printf("Create account first!\n");
+                break;
+            }
+            printf("Enter amount to deposit: ");
+            scanf("%f", &amount);
+            acc.balance += amount;
+            printf("Amount Deposited Successfully!\n");
+            break;
+
+        case 3:
+            if (!created) {
+                printf("Create account first!\n");
+                break;
+            }
+            printf("Enter amount to withdraw: ");
+            scanf("%f", &amount);
+            if (amount > acc.balance) {
+                printf("Insufficient Balance!\n");
+            } else {
+                acc.balance -= amount;
+                printf("Withdrawal Successful!\n");
+            }
+            break;
+
+        case 4:
+            if (!created) {
+                printf("Create account first!\n");
+                break;
+            }
+            printf("Account Number: %d\n", acc.accNo);
+            printf("Name: %s\n", acc.name);
+            printf("Balance: %.2f\n", acc.balance);
+            break;
+
+        case 5:
+            printf("Thank you!\n");
+            return 0;
+
+        default:
+            printf("Invalid Choice!\n");
+        }
+    }
+
+    return 0;
+}
