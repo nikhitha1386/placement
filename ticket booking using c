@@ -1,0 +1,81 @@
+#include <stdio.h>
+#include <string.h>
+#define MAX 5
+struct Ticket {
+    int seatNo;
+    char name[50];
+    int booked; // 0 = available, 1 = booked
+};
+int main() {
+    struct Ticket t[MAX];
+    int choice, seat;
+
+    // Initialize seats
+    for (int i = 0; i < MAX; i++) {
+        t[i].seatNo = i + 1;
+        t[i].booked = 0;
+    }
+    while (1) {
+        printf("\n--- Online Ticket Booking System ---\n");
+        printf("1. Book Ticket\n");
+        printf("2. Cancel Ticket\n");
+        printf("3. Display Booked Tickets\n");
+        printf("4. Check Available Seats\n");
+        printf("5. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+        switch (choice) {
+        case 1:
+            printf("Enter seat number to book (1-%d): ", MAX);
+            scanf("%d", &seat);
+
+            if (seat < 1 || seat > MAX) {
+                printf("Invalid seat number!\n");
+            } else if (t[seat - 1].booked) {
+                printf("Seat already booked!\n");
+            } else {
+                printf("Enter your name: ");
+                scanf("%s", t[seat - 1].name);
+                t[seat - 1].booked = 1;
+                printf("Ticket Booked Successfully!\n");
+            }
+            break;
+        case 2:
+            printf("Enter seat number to cancel: ");
+            scanf("%d", &seat);
+
+            if (seat < 1 || seat > MAX) {
+                printf("Invalid seat number!\n");
+            } else if (!t[seat - 1].booked) {
+                printf("Seat is not booked!\n");
+            } else {
+                t[seat - 1].booked = 0;
+                printf("Ticket Cancelled Successfully!\n");
+            }
+            break;
+        case 3:
+            printf("\n--- Booked Tickets ---\n");
+            for (int i = 0; i < MAX; i++) {
+                if (t[i].booked) {
+                    printf("Seat %d booked by %s\n", t[i].seatNo, t[i].name);
+                }
+            }
+            break;
+        case 4:
+            printf("\nAvailable Seats:\n");
+            for (int i = 0; i < MAX; i++) {
+                if (!t[i].booked) {
+                    printf("Seat %d is available\n", t[i].seatNo);
+                }
+            }
+            break;
+        case 5:
+            printf("Exiting...\n");
+            return 0;
+
+        default:
+            printf("Invalid choice!\n");
+        }
+    }
+    return 0;
+}
